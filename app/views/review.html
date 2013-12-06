@@ -1,0 +1,16 @@
+<nav-bar></nav-bar>
+<H3>Data Output</H3>
+<div class="lead">Use this json data to export the values into a newly instrumented collective site.</div>
+<div id="textArea">
+<textarea id="jsonOutput" rows="30" cols="250">
+    {{jsonData}}
+</textarea>
+</div>
+<div style="margin-top:20px;">
+    <div class="pull-left">
+        <nav-btn label="'Go Back'" path="'categories'"></nav-btn>
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary btn-lg" href="{{jsonUrl}}" download="export.json">Download Data</a>
+    </div>
+</div>

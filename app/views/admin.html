@@ -1,0 +1,56 @@
+<nav-bar></nav-bar>
+<div ng-controller="AdminCtrl as admin">
+    <form name="addAdmin" class="form-inline" role="form" ng-model="admin.newAdmin" ng-submit="admin.addAdmin()">
+        <fieldset>
+         <legend>Add New Administrator</legend>
+        <div class="form-group">
+           <label for="name" class="sr-only">Name</label>
+           <input id="name" ng-model="newAdmin.name" class="form-control" required placeholder="Enter Name"/>
+       </div>
+       <div class="form-group">
+           <label for="email" class="sr-only">Email</label>
+           <input id="email" ng-model="newAdmin.email" class="form-control" required placeholder="Enter Email"/>
+       </div>
+       <div class="form-group">
+           <label for="global" class="checkbox-inline">Global Admin</label>
+           <input type="checkbox" id="global" ng-model="newAdmin.global" />
+       </div>
+       <div class="form-group">
+           <label for="support" class="checkbox-inline">Support Admin</label>
+           <input type="checkbox" id="support" ng-model="newAdmin.support"/>
+       </div>
+       <div class="form-group">
+           <label for="address" class="sr-only">Physical Address</label>
+           <input id="address" ng-model="newAdmin.address" class="form-control" required placeholder="Enter Address" size="50"/>
+       </div>
+       <div class="form-group">
+           <button type="submit" class="btn btn-primary">Add</button>
+       </div>
+        </fieldset>
+   </form>
+</div>
+<br/>
+<div id="currentAdmins">
+    <H3>Administrators</H3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Global</th>
+            <th>Support</th>
+            <th>Address</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="admin in admins">
+            <td>{{admin.name}}</td>
+            <td>{{admin.email}}</td>
+            <td>{{admin.global}}</td>
+            <td>{{admin.support}}</td>
+            <td>{{admin.address}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="pull-right">
+    <nav-btn label="'Continue'" path="'assetGroups'"></nav-btn>
+</div>

@@ -1,0 +1,135 @@
+<nav-bar></nav-bar>
+<div ng-controller="PermissionCtrl as permission">
+    <form name="addRole" class="form-inline" role="form" ng-model="permission.newRole" ng-submit="permission.addRole()">
+            <fieldset>
+                <legend>Add New Role</legend>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="name" class="control-label">Role Name</label>
+                        <input id="name" ng-model="newRole.name"  class="form-control" size="10" required placeholder="Enter Role Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="regCode" class="control-label">Registration Code</label>
+                        <input id="regCode" ng-model="newRole.registrationCode" class="form-control" size="5" placeholder="Enter Registration Code"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="autoApprove" class="checkbox-inline">Auto Approve?</label>
+                        <input type="checkbox" id="autoApprove" ng-model="newRole.autoApprove" />
+                    </div>
+                    <div class="form-group">
+                        <label for="viaInternet" class="control-label">Send Via Internet?</label>
+                        <select id="viaInternet" class="form-control" ng-model="newRole.viaInternet">
+                            <option>Self</option>
+                            <option>Others</option>
+                            <option>Self & Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="internetApproval" class="checkbox-inline">Require Approval?</label>
+                        <input type="checkbox"  id="internetApproval" ng-model="newRole.internetApproval" />
+                    </div>
+                    <div class="form-group">
+                        <label for="viaCarrier" class="control-label">Send Via Carrier?</label>
+                        <select id="viaCarrier" class="form-control" ng-model="newRole.viaCarrier">
+                            <option>Self</option>
+                            <option>Others</option>
+                            <option>Self & Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="carrierApproval" class="checkbox-inline">Require Approval?</label>
+                        <input type="checkbox"  id="carrierApproval" ng-model="newRole.carrierApproval" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+        </fieldset>
+    </form>
+</div>
+<br class="clearfix"/>
+<hr/>
+<div id="currentRoles">
+    <H3>Roles</H3>
+    <div style="border: solid 1px black; border-radius: 10px; padding: 0px 15px; padding-bottom:5px;">
+        <div class="row" style="background-color: #979797; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            <div class="col-md-1 text-center"><H5>Name</H5></div>
+            <div class="col-md-2 text-center"><H5>Registration Code</H5></div>
+            <div class="col-md-1 text-center"><H5>Auto Approve?</H5></div>
+            <div class="col-md-2 text-center"><H5>Send Via Internet?</H5></div>
+            <div class="col-md-2 text-center"><H5>Require Approval?</H5></div>
+            <div class="col-md-2 text-center"><H5>Send Via Carrier?</H5></div>
+            <div class="col-md-1 text-center"><H5>Require Approval?</H5></div>
+            <div class="col-md-1 text-center"></div>
+        </div>
+        <div class="row" ng-repeat="role in roles" style="padding-top:5px; padding-bottom:5px;">
+            <div class="col-md-1 text-center"><strong>{{role.name}}</strong></div>
+            <div class="col-md-2 text-center">{{role.registrationCode}}</div>
+            <div class="col-md-1 text-center">{{role.autoApprove}}</div>
+            <div class="col-md-2 text-center">{{role.viaInternet}}</div>
+            <div class="col-md-2 text-center">{{role.internetApproval}}</div>
+            <div class="col-md-2 text-center">{{role.viaCarrier}}</div>
+            <div class="col-md-1 text-center">{{role.carrierApproval}}</div>
+            <div class="col-md-1 text-center">
+                <add-group-to-role role="role"></add-group-to-role>
+                <button class="btn btn-xs btn-primary" ng-click="removeRole(role)">Delete</button>
+            </div>
+
+                <div class="row" ng-if="hasGroups(role)">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" style="border: solid 1px black; background-color: #979797; margin-top:5px; width:90%">
+                        <div class="col-md-2 text-center"><strong>Asset Group</strong></div>
+                        <div class="col-md-1 text-center"><strong tooltip-placement="top" tooltip="Allows the role to view only assets in the asset group which are released/approved for use by administrators.">View</strong></div>
+                        <div class="col-md-1 text-center"><strong tooltip-placement="top" tooltip="Allows the role to view assets in the asset group regardless of whether they have been approved for use.">View +</strong></div>
+                        <div class="col-md-1 text-center"><strong tooltip-placement="top" tooltip="Allows the role to order only assets in the asset group which are released/approved for use by administrators.">Order</strong></div>
+                        <div class="col-md-1 text-center"><strong tooltip-placement="top" tooltip="Allows the role to order assets in the asset group regardless of whether they have been approved for use.">Order +</strong></div>
+                        <div class="col-md-2 text-center"><strong tooltip-placement="top" tooltip="Requires the role to receive approval from an administrator before they can receive.">Order Approval Req</strong></div>
+                        <div class="col-md-1 text-center"><strong>Edit</strong></div>
+                        <div class="col-md-1 text-center"><strong>Delete</strong></div>
+                        <div class="col-md-1 text-center"><strong>Upload</strong></div>
+                    </div>
+                </div>
+                  <div class="row" ng-repeat="perm in role.groupPermissions">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-10" style="padding:4px 0px; background-color: white; width:90%;">
+                          <div class="col-md-2 text-center">
+                              <strong>{{perm.assetGroup.name}}</strong>
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.view" />
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.view_plus" />
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.order" />
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.order_plus" />
+                          </div>
+                          <div class="col-md-2 text-center">
+                              <input type="checkbox" ng-model="perm.order_approval" />
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.edit" />
+                          </div>
+                          <div class="col-md-1 text-center">
+                              <input type="checkbox" ng-model="perm.delete" />
+                          </div>
+                          <div class="col-md-1" style="padding-left:30px; width:11%;">
+                              <input type="checkbox" ng-model="perm.upload" />
+                              <button class="pull-right btn btn-xs btn-primary" ng-click="removePermission(role,perm)">Delete</button>
+                          </div>
+                      </div>
+                  </div>
+        </div>
+    </div>
+</div>
+<br class="clearfix"/>
+<hr/>
+<div class="pull-left">
+    <nav-btn label="'Go Back'" path="'assetGroups'"></nav-btn>
+</div>
+<div class="pull-right">
+    <nav-btn label="'Continue'" path="'metadataFields'"></nav-btn>
+</div>

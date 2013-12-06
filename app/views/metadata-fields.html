@@ -1,0 +1,86 @@
+<nav-bar></nav-bar>
+<div ng-controller="MetadataFieldCtrl as metadataField">
+    <form name="addRole" class="form-inline"  role="form" ng-model="metadataField.newField" ng-submit="metadataField.addField()">
+        <fieldset>
+            <legend>Add New Metadata Field</legend>
+            <div class="row">
+                    <div class="form-group">
+                        <label for="name"class="control-label">Name</label>
+                        <input id="name" ng-model="newField.name" class="form-control" required placeholder="Enter Field Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="control-label">Type</label>
+                        <select id="type" ng-model="newField.type" class="form-control" required>
+                            <option>Auto-completer</option>
+                            <option>Checkbox</option>
+                            <option>Date</option>
+                            <option>Drop-down</option>
+                            <option>Numeric Field</option>
+                            <option>Palette</option>
+                            <option>Text Area</option>
+                            <option>Text Field</option>
+                        </select>
+                    </div>
+                    <div ng-if="metadataField.showListBox()" class="form-group" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}>
+                        <label for="listValues" class="control-label">List Values</label>
+                        <textarea id="listValues" ng-model="newField.listValues" class="form-control" placeholder="List Values (semi-colon separated)" cols="30" rows="4"/>
+                    </div>
+                    <div ng-if="metadataField.showListBox()" class="form-group">
+                        <label for="filter" class="checkbox-inline">Enable As Filter</label>
+                        <input type="checkbox" id="filter" ng-model="newField.filter" />
+                    </div>
+                    <div class="form-group">
+                        <label for="required" class="checkbox-inline">Is Required</label>
+                        <input type="checkbox" id="required" ng-model="newField.required" />
+                    </div>
+                    <div class="form-group" style="margin-right:-2px;">
+                        <select ng-model="newField.mapping.type" class="form-control">
+                            <option>IPTC</option>
+                            <option>XMP</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-left:-2px;">
+                        <label for="mapping" class="control-label">IPTC/XMP Field</label>
+                        <input id="mapping" ng-model="newField.mapping.value" class="form-control" placeholder="Enter IPTC/XMP Field" size="20"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<br class="clearfix"/>
+<br/>
+<div id="currentFields">
+    <H3>Metadata Fields</H3>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>List Values</th>
+        <th>Enable As Filter</th>
+        <th>Required</th>
+        <th>IPTC/XMP Field</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="field in fields">
+            <td>{{field.name}}</td>
+            <td>{{field.type}}</td>
+            <td>{{field.listValues}}</td>
+            <td>{{field.filter}}</td>
+            <td>{{field.required}}</td>
+            <td>
+                <span ng-if="hasMapping(field)">{{field.mapping.type}}:{{field.mapping.value}}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="pull-left">
+    <nav-btn label="'Go Back'" path="'permissions'"></nav-btn>
+</div>
+<div class="pull-right">
+    <nav-btn label="'Continue'" path="'metadataTypes'"></nav-btn>
+</div>

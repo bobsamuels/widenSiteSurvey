@@ -1,0 +1,43 @@
+<div>
+<button class="pull-left btn btn-xs btn-primary addGroupBtn" id="addBtn_{{roleHash}}" ng-click="openOverlay()">Add</button>
+
+<div class="md-modal md-effect-1" id="overlay_{{roleHash}}">
+<!--<div id="addGroupOverlay" style="display:none;background: gray; width: 200px; height: 200px; position: absolute; left: 50%; top: 50%; margin-left: -100px; margin-top: -100px;">-->
+    <div class="md-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button" ng-click="closeOverlay()">×</button>
+            <h4 id="myModalLabel" class="modal-title">Add Asset Group to {{role.name}}</h4>
+        </div>
+        <div ng-controller="AddGroupToRoleCtrl as addRoleCtrl">
+        <form name="addRole" class="form-inline" role="form" ng-model="addRoleCtrl.group" ng-submit="addRoleCtrl.addGroupToRole()">
+            <div class="form-group">
+                <label for="groups" class="control-label">Choose Existing Asset Group</label>
+                <select id="groups" ng-model="group.assetGroup" ng-options="g.name for g in assetGroups"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Select</button>
+            </div>
+            <br/>
+            <hr/>
+            <fieldset>
+                <legend>Create New Asset Group</legend>
+            <div class="form-group">
+                <label for="name" class="sr-only">Name</label>
+                <input id="name" ng-model="group.newAssetGroup.name" class="form-control" size="40" placeholder="Enter Asset Group Name"/>
+            </div>
+            <div class="form-group">
+                <label for="description" class="sr-only">Description</label>
+                <textarea id="description" ng-model="group.newAssetGroup.description" class="form-control" cols="30" placeholder="Enter a description for the asset group...."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+            </fieldset>
+        </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default closeOverlayBtn" type="button" ng-click="closeOverlay()">Close</button>
+        </div>
+    </div>
+</div>
+</div>

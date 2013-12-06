@@ -1,0 +1,56 @@
+<nav-bar></nav-bar>
+<div ng-controller="MetadataTypeCtrl as metadataType">
+    <form name="addRole" class="form-inline"  role="form" ng-model="metadataType.newType" ng-submit="metadataType.addType()">
+        <fieldset>
+            <legend>Add New Metadata Type</legend>
+            <div class="form-group">
+                <label for="name" class="control-label">Name</label>
+                <input id="name" ng-model="newType.name" class="form-control" required placeholder="Enter Type Name"/>
+            </div>
+            <div class="form-group">
+                <label for="groups" class="control-label">Associated Asset Groups</label>
+                <select id="groups" multiple ng-model="newType.groups" ng-options="g.name for g in assetGroups" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="fields" class="control-label">Metadata Fields</label>
+                <select id="fields" multiple ng-model="newType.fields" ng-options="f.name for f in metadataFields" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<br class="clearfix"/>
+<br/>
+<div id="currentFields">
+    <H3>Metadata Types</H3>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>Name</th>
+        <th>Asset Groups</th>
+        <th>Fields</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="type in metadataTypes">
+            <td>{{type.name}}</td>
+            <td>
+                <p ng-repeat="group in type.groups">
+                {{group.name}}
+                </p>
+            </td>
+            <td>
+                <p ng-repeat="field in type.fields">
+                    {{field.name}}
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="pull-left">
+    <nav-btn label="'Go Back'" path="'metadataFields'"></nav-btn>
+</div>
+<div class="pull-right">
+    <nav-btn label="'Continue'" path="'categories'"></nav-btn>
+</div>
